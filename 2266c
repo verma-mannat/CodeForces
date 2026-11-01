@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            String s = sc.next();
+
+            int zeros = 0;
+
+            for (int i = 0; i < n; i++) {
+                if (s.charAt(i) == '0') {
+                    zeros++;
+                }
+            }
+
+            int ans = zeros;
+            int leftOnes = 0;
+
+            for (int i = 0; i <= n; i++) {
+
+                // If left part is non-empty and starts with 1,
+                // this split is impossible.
+                if (i > 0 && s.charAt(0) == '1') {
+                    break;
+                }
+
+                int leftZeros = i - leftOnes;
+
+                // 1s in left + 0s in right
+                int rightZeros = zeros - leftZeros;
+
+                int op = leftOnes + rightZeros;
+
+                ans = Math.min(ans, op);
+
+                // Add s[i] to left for next split
+                if (i < n && s.charAt(i) == '1') {
+                    leftOnes++;
+                }
+            }
+
+            System.out.println(ans);
+        }
+    }
+}
